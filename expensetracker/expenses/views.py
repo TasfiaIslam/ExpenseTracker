@@ -1,23 +1,20 @@
 from django.shortcuts import render
-from django.http import JsonResponse
-from .serializers import ExpenseSerializer, ExpenseCreateSerializer
+from rest_framework import generics
+from rest_framework.decorators import api_view
+from rest_framework.response import Response
+
+from .serializers import ExpenseSerializer
 from .models import Expense
 
 from rest_framework.response import Response
 # Create your views here.
 
 
-def expense_list_view(request, *args, **kwargs):
-    qs = Expense.objects.all()
-    serializer = ExpenseSerializer(qs, many=True)
+class ExpenseList(generics.ListCreateAPIView):
+    queryset = Expense.objects.all()
+    serializer_class = ExpenseSerializer
+    pass
 
-    return JsonResponse({}, status=200)
 
-
-def expense_create_view(request, *args, **kwargs):
-    data = request.POST or None
-    serializer = ExpenseCreateSerializer(data)
-    if serializer.is_valid():
-        serializer.save()
-
-    return JsonResponse({}, status=200)
+class ExpenseDetail(generics.RetrieveDestroyAPIView):
+    pass

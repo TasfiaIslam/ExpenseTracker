@@ -31,6 +31,7 @@ INSTALLED_APPS = [
 
     # Internal
     'expenses',
+    'frontend',
     # Third Party
     'rest_framework',
 ]

@@ -13,8 +13,8 @@ from rest_framework.response import Response
 class ExpenseList(generics.ListCreateAPIView):
     queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
-    pass
 
 
 class ExpenseDetail(generics.RetrieveDestroyAPIView):
-    pass
+    queryset = Expense.objects.all()
+    serializer_class = ExpenseSerializer

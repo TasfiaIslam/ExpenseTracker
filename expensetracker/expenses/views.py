@@ -15,6 +15,6 @@ class ExpenseList(generics.ListCreateAPIView):
     serializer_class = ExpenseSerializer
 
 
-class ExpenseDetail(generics.RetrieveDestroyAPIView):
+class ExpenseDetail(generics.RetrieveAPIView):
     queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer

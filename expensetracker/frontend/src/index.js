@@ -6,7 +6,7 @@ import App from "./App";
 import Header from "./components/Header";
 import Footer from "./components/Footer";
 
-const routing = (
+ReactDOM.render(
   <Router>
     <React.StrictMode>
       <Header />
@@ -15,5 +15,6 @@ const routing = (
       </Switch>
       <Footer />
     </React.StrictMode>
-  </Router>
+  </Router>,
+  document.getElementById("root")
 );

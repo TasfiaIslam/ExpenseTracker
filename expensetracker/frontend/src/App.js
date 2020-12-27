@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import "./App.css";
-import Expenses from "./components/Expenses";
-import ExpenseLoadingComponent from "./components/ExpenseLoading";
+import Expenses from "./components/expenses";
+import ExpenseLoadingComponent from "./components/expenseLoading";
 
 function App() {
   const ExpenseLoading = ExpenseLoadingComponent(Expenses);

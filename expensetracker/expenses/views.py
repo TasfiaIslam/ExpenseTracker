@@ -36,7 +36,7 @@ class ExpenseUserWritePermission(BasePermission):
 
 
 class ExpenseList(generics.ListCreateAPIView):
-    permission_classes = [DjangoModelPermissions]
+    permission_classes = [AllowAny]  # DjangoModelPermissions
     queryset = Expense.objects.all()
     serializer_class = ExpenseSerializer
 

@@ -1,5 +1,5 @@
 import React from "react";
-import { makeStyles } from "@material-ui/core/styles";
+import { withStyles, makeStyles } from "@material-ui/core/styles";
 import Table from "@material-ui/core/Table";
 import TableBody from "@material-ui/core/TableBody";
 import TableCell from "@material-ui/core/TableCell";
@@ -8,9 +8,27 @@ import TableHead from "@material-ui/core/TableHead";
 import TableRow from "@material-ui/core/TableRow";
 import Paper from "@material-ui/core/Paper";
 
+const StyledTableCell = withStyles((theme) => ({
+  head: {
+    backgroundColor: theme.palette.common.black,
+    color: theme.palette.common.white,
+  },
+  body: {
+    fontSize: 14,
+  },
+}))(TableCell);
+
+const StyledTableRow = withStyles((theme) => ({
+  root: {
+    "&:nth-of-type(odd)": {
+      backgroundColor: theme.palette.action.hover,
+    },
+  },
+}))(TableRow);
+
 const useStyles = makeStyles({
   table: {
-    minWidth: 650,
+    minWidth: 700,
   },
 });
 
@@ -24,23 +42,29 @@ const Expenses = (props) => {
       <TableContainer component={Paper}>
         <Table className={classes.table} aria-label="simple table">
           <TableHead>
-            <TableRow>
-              <TableCell>Type</TableCell>
-              <TableCell align="right">Description</TableCell>
-              <TableCell align="right">Payment</TableCell>
-              <TableCell align="right">Amount</TableCell>
-            </TableRow>
+            <StyledTableRow>
+              <StyledTableCell>Type</StyledTableCell>
+              <StyledTableCell align="right">Description</StyledTableCell>
+              <StyledTableCell align="right">Payment</StyledTableCell>
+              <StyledTableCell align="right">Amount</StyledTableCell>
+            </StyledTableRow>
           </TableHead>
           <TableBody>
             {expenses.map((expense) => (
-              <TableRow key={expense.type_of_expense}>
-                <TableCell component="th" scope="row">
+              <StyledTableRow key={expense.type_of_expense}>
+                <StyledTableCell component="th" scope="row">
                   {expense.type_of_expense}
-                </TableCell>
-                <TableCell align="right">{expense.description}</TableCell>
-                <TableCell align="right">{expense.payment}</TableCell>
-                <TableCell align="right">{expense.amount}</TableCell>
-              </TableRow>
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {expense.description}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {expense.payment}
+                </StyledTableCell>
+                <StyledTableCell align="right">
+                  {expense.amount}
+                </StyledTableCell>
+              </StyledTableRow>
             ))}
           </TableBody>
         </Table>

@@ -6,6 +6,7 @@ import App from "./App";
 import Header from "./components/header";
 import Footer from "./components/footer";
 import Register from "./components/register";
+import Login from "./components/login";
 
 ReactDOM.render(
   <Router>
@@ -14,6 +15,8 @@ ReactDOM.render(
       <Switch>
         <Route exact path="/" component={App} />
         <Route path="/register" component={Register} />
+        <Route path="/login" component={Login} />
+        {/* <Route path="/logout" component={Logout} /> */}
       </Switch>
       <Footer />
     </React.StrictMode>

@@ -1,15 +1,16 @@
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from rest_framework import generics
 from rest_framework.decorators import api_view
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework import status
+from rest_framework import viewsets
 
 from .serializers import ExpenseSerializer, UserSerializer
 from .models import Expense
 
 from rest_framework.response import Response
-from rest_framework.permissions import AllowAny, SAFE_METHODS, BasePermission, IsAdminUser, DjangoModelPermissions
+from rest_framework.permissions import AllowAny, IsAuthenticated, SAFE_METHODS, BasePermission, IsAdminUser, DjangoModelPermissions
 # Create your views here.
 
 
@@ -35,13 +36,26 @@ class ExpenseUserWritePermission(BasePermission):
         return obj.user == request.user
 
 
-class ExpenseList(generics.ListCreateAPIView):
-    permission_classes = [AllowAny]  # DjangoModelPermissions
+class ExpenseList(viewsets.ViewSet):
+    permission_classes = [IsAuthenticated]
     queryset = Expense.objects.all()
-    serializer_class = ExpenseSerializer
+
+    def list(self, request):
+        serializer_class = ExpenseSerializer(self.queryset, Many=True)
+        return Response(serializer_class.data)
+
+    def retrieve(self, request, pk=None):
+        expense = get_object_or_404(self.queryset, pk=pk)
+        serializer_class = ExpenseSerializer(expense)
+        return Response(serializer_class.data)
+
+# class ExpenseList(generics.ListCreateAPIView):
+#     permission_classes = [AllowAny]  # DjangoModelPermissions
+#     queryset = Expense.objects.all()
+#     serializer_class = ExpenseSerializer
 
 
-class ExpenseDetail(generics.RetrieveUpdateDestroyAPIView, ExpenseUserWritePermission):
-    permission_classes = [ExpenseUserWritePermission]
-    queryset = Expense.objects.all()
-    serializer_class = ExpenseSerializer
+# class ExpenseDetail(generics.RetrieveUpdateDestroyAPIView, ExpenseUserWritePermission):
+#     permission_classes = [ExpenseUserWritePermission]
+#     queryset = Expense.objects.all()
+#     serializer_class = ExpenseSerializer
